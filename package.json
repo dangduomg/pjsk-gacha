@@ -1,0 +1,8 @@
+{
+    "name": "my-php-framework",
+    "description": "i made a tiny web framework NOT in js",
+
+    "scripts": {
+        "serve": "php -S localhost:8000"
+    }
+}
