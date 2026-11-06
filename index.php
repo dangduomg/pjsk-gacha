@@ -2,10 +2,20 @@
 
 // the main handler
 
+namespace MyServer;
+
 require 'router.php';
 require 'algorithm/test.php';
 
-$my_router = new \MyServer\Router();
+use const Gacha\PJSK\Test\gacha;
+
+$my_router = new Router();
+
+$my_router->add_route('GET', '#^/(?:index.php)?$#', function($args) {
+    http_response_code(301);
+    send_headers(['Location' => '/client']);
+    throw new OverrideDefaultException();
+});
 
 $my_router->add_route('GET', '#^/api/pull1$#', fn($args) => [
     'headers' => [
@@ -13,7 +23,7 @@ $my_router->add_route('GET', '#^/api/pull1$#', fn($args) => [
     ],
     'body' => json_encode([
         'status' => 'success',
-        'message' => [\Gacha\PJSK\Test\gacha->pull1()]
+        'message' => [gacha->pull1()]
     ])
 ]);
 
@@ -23,7 +33,7 @@ $my_router->add_route('GET', '#^/api/pull10$#', fn($args) => [
     ],
     'body' => json_encode([
         'status' => 'success',
-        'message' => \Gacha\PJSK\Test\gacha->pull10()
+        'message' => gacha->pull10()
     ], JSON_THROW_ON_ERROR)
 ]);
 

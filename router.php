@@ -38,6 +38,13 @@ class Arguments {
     }
 }
 
+class OverrideDefaultException extends \Exception {
+    /* don't return anything to the router;
+     * overriding its default behavior of sending return value as the
+     * response
+     */
+}
+
 class Router {
     // the router
 
@@ -71,6 +78,8 @@ class Router {
                     send_success($res['body'], $res['headers']);
                     return;
                 }
+            } catch (OverrideDefaultException $e) {
+                return;
             } catch (RequestException $e) {
                 send_error($e::status_code);
                 return;
