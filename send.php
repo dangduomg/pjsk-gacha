@@ -25,4 +25,16 @@ function send_error($code, $additional_headers = []) {
     http_response_code($code);
     send_headers($additional_headers);
     send_headers(['Content-Type' => 'text/html']);
+    ?>
+        <!DOCTYPE html>
+        <html>
+            <head>
+                <meta charset="utf-8" />
+                <title>error message</title>
+            </head>
+            <body>
+                <h1><?= $code ?> <?= $message ?></h1>
+            </body>
+        </html>
+    <?php
 }
